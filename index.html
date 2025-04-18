@@ -13,6 +13,24 @@
     body {
       font-family: Arial, sans-serif;
       padding-top: 70px;
+      background-color: #f5f5f5;
+    }
+    /* Top menu custom styling */
+    .navbar {
+      background: linear-gradient(90deg, #4e73df, #224abe);
+    }
+    .navbar .navbar-brand,
+    .navbar .nav-link {
+      color: #fff !important;
+    }
+    .navbar .nav-link:hover {
+      color: #d1d1e0 !important;
+    }
+    .navbar-toggler {
+      border-color: rgba(255,255,255,0.1);
+    }
+    .navbar-toggler-icon {
+      filter: invert(1);
     }
     footer {
       background: #f8f9fa;
@@ -22,9 +40,11 @@
     }
     .card {
       transition: transform 0.2s ease;
+      border: none;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
     .card:hover {
-      transform: scale(1.02);
+      transform: scale(1.03);
     }
     #lastUpdated, #welcomeMessage {
       font-style: italic;
@@ -34,7 +54,7 @@
 </head>
 <body>
   <!-- Top navigation -->
-  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light shadow-sm">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark shadow-sm">
     <div class="container">
       <a class="navbar-brand" href="index.html">Ferramentas Educativas</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Alternar navegação">
@@ -60,7 +80,7 @@
     <p class="lead">Facilite o trabalho docente com soluções digitais gratuitas e eficazes.</p>
     <!-- Presentation Text -->
     <section id="apresentacao" class="mb-3">
-      <p>Bem-vindo ao Ferramentas Educativas! Aqui encontrará cronómetros de aula, geradores de grupos de trabalho, repositórios de recursos e muito mais, tudo pensado para simplificar o dia a dia de professores e alunos.</p>
+      <p>Bem-vindo ao Ferramentas Educativas! Aqui disponibilizamos todas as ferramentas, artigos e recursos necessários para transformar suas aulas.</p>
     </section>
     <!-- Dynamic teaching message -->
     <p id="welcomeMessage"></p>
@@ -68,33 +88,33 @@
     <p id="lastUpdated"></p>
   </header>
 
-  <!-- Main content: sample cards -->
+  <!-- Main content: updated cards -->
   <section class="container mb-5">
     <div class="row g-4">
       <div class="col-md-4">
         <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">Cronómetro de Aula</h5>
-            <p class="card-text">Mantenha a gestão do tempo com um cronómetro pensado para o ambiente escolar.</p>
-            <a href="ferramentas.html#cronometro" class="btn btn-primary">Aceder</a>
+          <div class="card-body text-center">
+            <h5 class="card-title">Ferramentas</h5>
+            <p class="card-text">Aceda a diversas ferramentas úteis, como cronómetro de aula, gerador de grupos e muito mais.</p>
+            <a href="ferramentas.html" class="btn btn-primary">Conhecer</a>
           </div>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">Gerador de Grupos</h5>
-            <p class="card-text">Crie grupos de trabalho aleatórios de forma rápida e justa.</p>
-            <a href="ferramentas.html#gerador-grupos" class="btn btn-primary">Aceder</a>
+          <div class="card-body text-center">
+            <h5 class="card-title">Artigos</h5>
+            <p class="card-text">Leia análises detalhadas de ferramentas com potencial educativo e boas práticas de uso.</p>
+            <a href="analises.html" class="btn btn-primary">Ler</a>
           </div>
         </div>
       </div>
       <div class="col-md-4">
         <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">Repositório de Recursos</h5>
-            <p class="card-text">Consulte materiais didáticos prontos a usar, organizados por área disciplinar.</p>
-            <a href="recursos.html" class="btn btn-primary">Aceder</a>
+          <div class="card-body text-center">
+            <h5 class="card-title">Recursos</h5>
+            <p class="card-text">Explore repositórios de materiais didáticos gratuitos, organizados por disciplina.</p>
+            <a href="recursos.html" class="btn btn-primary">Explorar</a>
           </div>
         </div>
       </div>
