@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Ferramentas Educativas para docentes e alunos. Aceda a recursos digitais úteis para o ensino." />
+  <meta name="description" content="Ferramentas Educativas para docentes, pais e curiosos. Explore soluções digitais interativas para aprender e ensinar de forma envolvente." />
   <title>Ferramentas Educativas</title>
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script>
@@ -63,9 +63,6 @@
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
-          <li class="nav-item"><a class="nav-link" href="ferramentas.html">Ferramentas</a></li>
-          <li class="nav-item"><a class="nav-link" href="analises.html">Artigos</a></li>
-          <li class="nav-item"><a class="nav-link" href="recursos.html">Recursos</a></li>
           <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
           <li class="nav-item"><a class="nav-link" href="politica.html">Política de Privacidade</a></li>
           <li class="nav-item"><a class="nav-link" href="contactos.html">Contactos</a></li>
@@ -74,15 +71,15 @@
     </div>
   </nav>
 
-  <!-- Header with presentation and dynamic messages -->
+  <!-- Header with interactive presentation and dynamic message -->
   <header class="container text-center mb-5">
-    <h1 class="mt-4">Recursos e Ferramentas para o Ensino</h1>
-    <p class="lead">Facilite o trabalho docente com soluções digitais gratuitas e eficazes.</p>
+    <h1 class="mt-4">Bem-vindo ao Ferramentas Educativas!</h1>
+    <p class="lead">Procura inspiração, soluções práticas ou recursos inovadores? Aqui todos — professores, alunos, pais e curiosos — encontram ferramentas que transformam o aprendizado em experiência memorável.</p>
     <!-- Presentation Text -->
     <section id="apresentacao" class="mb-3">
-      <p>Bem-vindo ao Ferramentas Educativas! Aqui disponibilizamos todas as ferramentas, artigos e recursos necessários para transformar suas aulas.</p>
+      <p>Selecione abaixo o que mais combina com você e descubra como tornar cada aula ou momento de estudo mais dinâmico e envolvente.</p>
     </section>
-    <!-- Dynamic teaching message -->
+    <!-- Dynamic reflection message -->
     <p id="welcomeMessage"></p>
     <!-- Last updated date -->
     <p id="lastUpdated"></p>
@@ -95,7 +92,7 @@
         <div class="card h-100">
           <div class="card-body text-center">
             <h5 class="card-title">Ferramentas</h5>
-            <p class="card-text">Aceda a diversas ferramentas úteis, como cronómetro de aula, gerador de grupos e muito mais.</p>
+            <p class="card-text">Aceda a cronómetro de aula, gerador de grupos, contador regressivo e muito mais.</p>
             <a href="ferramentas.html" class="btn btn-primary">Conhecer</a>
           </div>
         </div>
@@ -104,7 +101,7 @@
         <div class="card h-100">
           <div class="card-body text-center">
             <h5 class="card-title">Artigos</h5>
-            <p class="card-text">Leia análises detalhadas de ferramentas com potencial educativo e boas práticas de uso.</p>
+            <p class="card-text">Explore análises de plataformas, boas práticas e casos de sucesso em educação digital.</p>
             <a href="analises.html" class="btn btn-primary">Ler</a>
           </div>
         </div>
@@ -113,7 +110,7 @@
         <div class="card h-100">
           <div class="card-body text-center">
             <h5 class="card-title">Recursos</h5>
-            <p class="card-text">Explore repositórios de materiais didáticos gratuitos, organizados por disciplina.</p>
+            <p class="card-text">Descubra materiais prontos para uso: planos de aula, fichas, vídeos e infográficos.</p>
             <a href="recursos.html" class="btn btn-primary">Explorar</a>
           </div>
         </div>
@@ -133,16 +130,17 @@
   <script>
     // Set last updated to current date (user access)
     document.getElementById('lastUpdated').textContent = 'Última atualização: ' + new Date().toLocaleDateString('pt-PT');
-    // Dynamic teaching messages
+    // Dynamic reflection messages (changes daily)
     const messages = [
-      'Ensinar é aprender duas vezes.',
-      'A educação é a arma mais poderosa que você pode usar para mudar o mundo.',
-      'O verdadeiro objetivo da educação é tornar o homem capaz de julgar por si mesmo.',
-      'Cada aluno é único: ensine com paixão e paciência.',
-      'Compartilhar conhecimento é semear o futuro.'
+      '"Ensinar é tocar uma vida para sempre."',
+      '"Aprender nunca foi tão dinâmico. Você está pronto?"',
+      '"Cada dia é uma nova oportunidade de descobrir algo incrível."',
+      '"Transforme curiosidade em conhecimento e surpreenda-se."',
+      '"O verdadeiro aprendizado acontece quando a prática encontra a teoria."'
     ];
-    const msg = messages[Math.floor(Math.random() * messages.length)];
-    document.getElementById('welcomeMessage').textContent = msg;
+    // Use day of month to vary message
+    const index = new Date().getDate() % messages.length;
+    document.getElementById('welcomeMessage').textContent = messages[index];
     // Update copyright year
     document.getElementById('copyrightYear').textContent = new Date().getFullYear();
   </script>
