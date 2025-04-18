@@ -13,6 +13,7 @@
     .navbar .nav-link:hover { color: #d1d1e0 !important; }
     footer { background: #f8f9fa; padding: 20px 0; text-align: center; margin-top: 40px; }
     .form-container { background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+    .btn-group-actions { margin-top: 15px; }
   </style>
 </head>
 <body>
@@ -36,6 +37,14 @@
         </div>
         <button type="submit" class="btn btn-primary">Gerar Grupos</button>
       </form>
+
+      <div class="btn-group-actions">
+        <button id="btnCopiar" class="btn btn-secondary mt-2">Copiar Grupos</button>
+        <button id="btnExportar" class="btn btn-secondary mt-2">Exportar para TXT</button>
+        <button id="btnGuardarLista" class="btn btn-secondary mt-2">Guardar Lista</button>
+        <button id="btnCarregarLista" class="btn btn-secondary mt-2">Carregar Lista</button>
+      </div>
+
       <hr />
       <div id="resultado" class="mt-4"></div>
     </div>
@@ -50,17 +59,23 @@
   <script>
     document.getElementById('ano').textContent = new Date().getFullYear();
 
-    document.getElementById('groupForm').addEventListener('submit', function(e) {
+    const form = document.getElementById('groupForm');
+    const resultado = document.getElementById('resultado');
+    const btnCopiar = document.getElementById('btnCopiar');
+    const btnExportar = document.getElementById('btnExportar');
+    const btnGuardarLista = document.getElementById('btnGuardarLista');
+    const btnCarregarLista = document.getElementById('btnCarregarLista');
+
+    form.addEventListener('submit', function(e) {
       e.preventDefault();
       const nomes = document.getElementById('nomes').value.trim().split('\n').filter(n => n);
       const tamanho = parseInt(document.getElementById('grupo').value);
-
       if (nomes.length === 0 || tamanho < 1) {
         alert("Por favor, insira os dados corretamente.");
         return;
       }
 
-      // Embaralhar os nomes
+      // Embaralhar nomes
       for (let i = nomes.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [nomes[i], nomes[j]] = [nomes[j], nomes[i]];
@@ -72,8 +87,38 @@
         grupos.push(nomes.slice(i, i + tamanho));
       }
 
-      const output = grupos.map((g, idx) => `<strong>Grupo ${idx + 1}</strong>: ${g.join(', ')}`).join('<br><br>');
-      document.getElementById('resultado').innerHTML = `<div class="alert alert-info">${output}</div>`;
+      let output = `<p>Total de Participantes: <strong>${nomes.length}</strong><br>Total de Grupos: <strong>${grupos.length}</strong></p>`;
+      output += grupos.map((g, idx) => `<div class="p-3 mb-2 bg-light border rounded"><strong>Grupo ${String.fromCharCode(65 + idx)}</strong>: ${g.join(', ')}</div>`).join('');
+      resultado.innerHTML = output;
+    });
+
+    btnCopiar.addEventListener('click', function() {
+      const text = resultado.innerText;
+      navigator.clipboard.writeText(text).then(() => alert('Grupos copiados para a área de transferência.'));
+    });
+
+    btnExportar.addEventListener('click', function() {
+      const text = resultado.innerText;
+      const blob = new Blob([text], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'grupos.txt';
+      link.click();
+    });
+
+    btnGuardarLista.addEventListener('click', function() {
+      localStorage.setItem('listaNomes', document.getElementById('nomes').value);
+      alert('Lista guardada localmente.');
+    });
+
+    btnCarregarLista.addEventListener('click', function() {
+      const lista = localStorage.getItem('listaNomes');
+      if (lista) {
+        document.getElementById('nomes').value = lista;
+        alert('Lista carregada.');
+      } else {
+        alert('Nenhuma lista guardada encontrada.');
+      }
     });
   </script>
 </body>
