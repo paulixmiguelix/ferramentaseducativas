@@ -32,4 +32,22 @@
         <i class="bi bi-tools"></i> <!-- This icon will require bootstrap icons -->
       </div>
       <h1 class="title">Funcionalidade em Desenvolvimento</h1>
-      <p class="message">A funcionalidade que você está tentando acessar ainda está em desenvolvimento. Por favor, volte mais
+      <p class="message">A funcionalidade que você está tentando acessar ainda está em desenvolvimento. Por favor, volte mais tarde.</p>
+      <p class="message">Agradecemos sua paciência e compreensão.</p>
+      
+      <!-- Botão para voltar à página principal -->
+      <a href="index.html" class="btn btn-primary btn-back">Voltar à Página Principal</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="ano"></span> Ferramentas Educativas. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('ano').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
