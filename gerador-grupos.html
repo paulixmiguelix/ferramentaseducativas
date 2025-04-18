@@ -41,8 +41,6 @@
       <div class="btn-group-actions">
         <button id="btnCopiar" class="btn btn-secondary mt-2">Copiar Grupos</button>
         <button id="btnExportar" class="btn btn-secondary mt-2">Exportar para TXT</button>
-        <button id="btnGuardarLista" class="btn btn-secondary mt-2">Guardar Lista</button>
-        <button id="btnCarregarLista" class="btn btn-secondary mt-2">Carregar Lista</button>
       </div>
 
       <hr />
@@ -63,8 +61,6 @@
     const resultado = document.getElementById('resultado');
     const btnCopiar = document.getElementById('btnCopiar');
     const btnExportar = document.getElementById('btnExportar');
-    const btnGuardarLista = document.getElementById('btnGuardarLista');
-    const btnCarregarLista = document.getElementById('btnCarregarLista');
 
     form.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -104,21 +100,6 @@
       link.href = URL.createObjectURL(blob);
       link.download = 'grupos.txt';
       link.click();
-    });
-
-    btnGuardarLista.addEventListener('click', function() {
-      localStorage.setItem('listaNomes', document.getElementById('nomes').value);
-      alert('Lista guardada localmente.');
-    });
-
-    btnCarregarLista.addEventListener('click', function() {
-      const lista = localStorage.getItem('listaNomes');
-      if (lista) {
-        document.getElementById('nomes').value = lista;
-        alert('Lista carregada.');
-      } else {
-        alert('Nenhuma lista guardada encontrada.');
-      }
     });
   </script>
 </body>
