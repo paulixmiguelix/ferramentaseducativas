@@ -3,44 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Contador regressivo para ajudar a controlar o tempo em atividades de sala de aula.">
+  <meta name="description" content="Contador regressivo para controlar o tempo em atividades de sala de aula de forma intuitiva e apelativa.">
   <title>Contador Regressivo - Ferramentas Educativas</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <style>
-    body { padding-top: 70px; background-color: #f4f4f9; font-family: Arial, sans-serif; }
+    body { padding-top: 70px; background-color: #eef2f7; font-family: Arial, sans-serif; }
     .navbar { background: linear-gradient(90deg, #4e73df, #224abe); }
     .navbar .navbar-brand, .navbar .nav-link { color: #fff !important; }
     .navbar .nav-link:hover { color: #d1d1e0 !important; }
     footer { background: #f8f9fa; padding: 20px 0; text-align: center; margin-top: 40px; }
-    .counter-container { background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.05); text-align: center; }
-    .counter-display { font-size: 3rem; font-weight: bold; margin-top: 20px; }
-    .btn-group-actions { margin-top: 20px; }
+    .counter-container { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 400px; margin: 0 auto; text-align: center; }
+    .counter-display { font-size: 4rem; font-weight: bold; color: #224abe; margin: 20px 0; }
+    .btn-group { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+    .progress { height: 1rem; border-radius: 0.5rem; overflow: hidden; }
   </style>
 </head>
 <body>
   <nav class="navbar fixed-top navbar-expand-lg navbar-dark shadow-sm">
     <div class="container">
       <a class="navbar-brand" href="index.html">Ferramentas Educativas</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+          <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
+          <li class="nav-item"><a class="nav-link" href="politica.html">Política de Privacidade</a></li>
+          <li class="nav-item"><a class="nav-link" href="contactos.html">Contactos</a></li>
+        </ul>
+      </div>
     </div>
   </nav>
 
-  <main class="container">
-    <div class="counter-container mt-5">
+  <main class="container mt-5">
+    <div class="counter-container">
       <h2>Contador Regressivo</h2>
-      <p>Defina o tempo para começar o contador.</p>
-
       <div class="mb-3">
-        <label for="tempo" class="form-label">Tempo (em segundos)</label>
-        <input type="number" id="tempo" class="form-control" min="1" required>
+        <label for="tempoInput" class="form-label">Defina o tempo (minutos:segundos)</label>
+        <div class="d-flex justify-content-center gap-2">
+          <input type="number" id="minutos" class="form-control" style="max-width:80px;" min="0" value="0"> <span>:</span>
+          <input type="number" id="segundos" class="form-control" style="max-width:80px;" min="0" max="59" value="30">
+        </div>
       </div>
-
-      <button id="iniciar" class="btn btn-primary">Iniciar Contagem</button>
-      
-      <div class="counter-display" id="contador"></div>
-
-      <div class="btn-group-actions">
-        <button id="parar" class="btn btn-danger mt-3" style="display: none;">Parar Contagem</button>
-        <button id="reiniciar" class="btn btn-success mt-3" style="display: none;">Reiniciar Contagem</button>
+      <div class="counter-display" id="contador">00:30</div>
+      <div class="progress">
+        <div id="barra" class="progress-bar bg-primary" role="progressbar" style="width:100%"></div>
+      </div>
+      <div class="btn-group">
+        <button id="startBtn" class="btn btn-primary">Iniciar</button>
+        <button id="pauseBtn" class="btn btn-warning" disabled>Pausar</button>
+        <button id="resetBtn" class="btn btn-secondary" disabled>Reiniciar</button>
+        <a href="index.html" class="btn btn-outline-primary">Voltar</a>
       </div>
     </div>
   </main>
@@ -53,55 +67,60 @@
 
   <script>
     document.getElementById('ano').textContent = new Date().getFullYear();
+    const minInput = document.getElementById('minutos');
+    const segInput = document.getElementById('segundos');
+    const display = document.getElementById('contador');
+    const barra = document.getElementById('barra');
+    const startBtn = document.getElementById('startBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const resetBtn = document.getElementById('resetBtn');
 
-    const iniciarButton = document.getElementById('iniciar');
-    const pararButton = document.getElementById('parar');
-    const reiniciarButton = document.getElementById('reiniciar');
-    const contadorDisplay = document.getElementById('contador');
-    let tempoRestante;
-    let countdown;
+    let totalSeconds, remaining, intervalId;
 
-    iniciarButton.addEventListener('click', function() {
-      tempoRestante = parseInt(document.getElementById('tempo').value);
-      if (isNaN(tempoRestante) || tempoRestante < 1) {
-        alert("Por favor, insira um valor válido.");
-        return;
-      }
-      
-      iniciarContagem();
-      reiniciarButton.style.display = "inline-block";
-      pararButton.style.display = "inline-block";
-      iniciarButton.style.display = "none";
-    });
+    function formatTime(sec) {
+      const m = String(Math.floor(sec/60)).padStart(2,'0');
+      const s = String(sec%60).padStart(2,'0');
+      return `${m}:${s}`;
+    }
 
-    pararButton.addEventListener('click', function() {
-      clearInterval(countdown);
-      reiniciarButton.style.display = "inline-block";
-      pararButton.style.display = "none";
-    });
-
-    reiniciarButton.addEventListener('click', function() {
-      clearInterval(countdown);
-      document.getElementById('tempo').value = '';
-      contadorDisplay.textContent = '';
-      reiniciarButton.style.display = "none";
-      pararButton.style.display = "none";
-      iniciarButton.style.display = "inline-block";
-    });
-
-    function iniciarContagem() {
-      countdown = setInterval(function() {
-        if (tempoRestante <= 0) {
-          clearInterval(countdown);
-          alert("Tempo esgotado!");
-          reiniciarButton.style.display = "inline-block";
-          pararButton.style.display = "none";
-        } else {
-          tempoRestante--;
-          contadorDisplay.textContent = tempoRestante + " segundos restantes";
+    startBtn.addEventListener('click', () => {
+      totalSeconds = parseInt(minInput.value)*60 + parseInt(segInput.value);
+      if (isNaN(totalSeconds) || totalSeconds<=0) return alert('Defina um tempo válido');
+      remaining = totalSeconds;
+      startBtn.disabled=true;
+      pauseBtn.disabled=false;
+      resetBtn.disabled=false;
+      minInput.disabled=true; segInput.disabled=true;
+      intervalId = setInterval(() => {
+        remaining--;
+        display.textContent = formatTime(remaining);
+        barra.style.width = (remaining/totalSeconds*100) + '%';
+        if (remaining<=0) {
+          clearInterval(intervalId);
+          alert('Tempo esgotado!');
+          pauseBtn.disabled=true;
         }
       }, 1000);
-    }
+    });
+
+    pauseBtn.addEventListener('click', () => {
+      if (intervalId) { clearInterval(intervalId); intervalId=null; pauseBtn.textContent='Retomar'; }
+      else { startBtn.disabled=true; pauseBtn.disabled=false; intervalId = setInterval(() => {
+        remaining--;
+        display.textContent = formatTime(remaining);
+        barra.style.width = (remaining/totalSeconds*100) + '%';
+        if (remaining<=0) { clearInterval(intervalId); alert('Tempo esgotado!'); pauseBtn.disabled=true; }
+      },1000); pauseBtn.textContent='Pausar'; }
+    });
+
+    resetBtn.addEventListener('click', () => {
+      clearInterval(intervalId);
+      display.textContent = formatTime(parseInt(segInput.value)+parseInt(minInput.value)*60);
+      barra.style.width = '100%';
+      startBtn.disabled=false; pauseBtn.disabled=true; resetBtn.disabled=true;
+      minInput.disabled=false; segInput.disabled=false; pauseBtn.textContent='Pausar';
+    });
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
