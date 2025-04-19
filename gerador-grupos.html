@@ -1,9 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="pt-PT">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Ferramenta para criar grupos de trabalho de forma automática.">
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4883403187063112"
+     crossorigin="anonymous"></script>
   <title>Gerador de Grupos - Ferramentas Educativas</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <style>
@@ -14,6 +17,8 @@
     footer { background: #f8f9fa; padding: 20px 0; text-align: center; margin-top: 40px; }
     .form-container { background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
     .btn-group-actions { margin-top: 15px; }
+    .group-box { padding: 1rem; margin-bottom: 0.75rem; border-radius: 0.5rem; }
+    #rangeContainer { display: none; }
   </style>
 </head>
 <body>
@@ -40,18 +45,26 @@
       <form id="groupForm">
         <div class="mb-3">
           <label for="nomes" class="form-label">Insira os nomes (um por linha)</label>
-          <textarea id="nomes" class="form-control" rows="6" required></textarea>
+          <textarea id="nomes" class="form-control" rows="6" placeholder="Ex: Ana\nBruno\nCarla" required></textarea>
         </div>
-        <div class="mb-3">
-          <label for="grupo" class="form-label">Número de elementos por grupo</label>
-          <input type="number" id="grupo" class="form-control" min="1" required />
+        <div class="form-check form-switch mb-3">
+          <input class="form-check-input" type="checkbox" id="modoGrupos">
+          <label class="form-check-label" for="modoGrupos">Definir número de grupos</label>
+        </div>
+        <div class="mb-3" id="numberContainer">
+          <label for="grupo" class="form-label" id="grupoLabel">Número de elementos por grupo</label>
+          <input type="number" id="grupo" class="form-control" min="1" placeholder="e.g. 4" required />
+        </div>
+        <div class="mb-3" id="rangeContainer">
+          <label class="form-label" for="rangeInput">Número de grupos desejado: <span id="rangeValue">2</span></label>
+          <input type="range" id="rangeInput" class="form-range" min="1" max="10" value="2">
         </div>
         <button type="submit" class="btn btn-primary">Gerar Grupos</button>
       </form>
 
       <div class="btn-group-actions">
-        <button id="btnCopiar" class="btn btn-secondary mt-2">Copiar Grupos</button>
-        <button id="btnExportar" class="btn btn-secondary mt-2">Exportar para TXT</button>
+        <button id="btnCopiar" class="btn btn-secondary mt-2" disabled>Copiar Grupos</button>
+        <button id="btnExportar" class="btn btn-secondary mt-2" disabled>Exportar para TXT</button>
         <a href="index.html" class="btn btn-outline-primary mt-2">Voltar à Página Principal</a>
       </div>
 
@@ -68,44 +81,67 @@
 
   <script>
     document.getElementById('ano').textContent = new Date().getFullYear();
-
     const form = document.getElementById('groupForm');
     const resultado = document.getElementById('resultado');
     const btnCopiar = document.getElementById('btnCopiar');
     const btnExportar = document.getElementById('btnExportar');
+    const modoGrupos = document.getElementById('modoGrupos');
+    const numberContainer = document.getElementById('numberContainer');
+    const rangeContainer = document.getElementById('rangeContainer');
+    const rangeInput = document.getElementById('rangeInput');
+    const rangeValue = document.getElementById('rangeValue');
 
-    form.addEventListener('submit', function(e) {
+    modoGrupos.addEventListener('change', () => {
+      if (modoGrupos.checked) {
+        numberContainer.style.display = 'none';
+        rangeContainer.style.display = 'block';
+      } else {
+        numberContainer.style.display = 'block';
+        rangeContainer.style.display = 'none';
+      }
+    });
+
+    rangeInput.addEventListener('input', () => {
+      rangeValue.textContent = rangeInput.value;
+    });
+
+    form.addEventListener('submit', (e) => {
       e.preventDefault();
       const nomes = document.getElementById('nomes').value.trim().split('\n').filter(n => n);
-      const tamanho = parseInt(document.getElementById('grupo').value);
-      if (nomes.length === 0 || tamanho < 1) {
-        alert("Por favor, insira os dados corretamente.");
+      const valor = modoGrupos.checked ? parseInt(rangeInput.value) : parseInt(document.getElementById('grupo').value);
+      if (!nomes.length || valor < 1) {
+        alert('Insira nomes e defina um valor válido.');
         return;
       }
-
+      // Shuffle
       for (let i = nomes.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [nomes[i], nomes[j]] = [nomes[j], nomes[i]];
       }
-
-      const grupos = [];
-      for (let i = 0; i < nomes.length; i += tamanho) {
-        grupos.push(nomes.slice(i, i + tamanho));
+      // Build groups
+      let grupos = [];
+      if (modoGrupos.checked) {
+        const size = Math.ceil(nomes.length / valor);
+        for (let i = 0; i < nomes.length; i += size) grupos.push(nomes.slice(i, i + size));
+      } else {
+        for (let i = 0; i < nomes.length; i += valor) grupos.push(nomes.slice(i, i + valor));
       }
-
-      let output = `<p>Total de Participantes: <strong>${nomes.length}</strong><br>Total de Grupos: <strong>${grupos.length}</strong></p>`;
-      output += grupos.map((g, idx) => `<div class="p-3 mb-2 bg-light border rounded"><strong>Grupo ${String.fromCharCode(65 + idx)}</strong>: ${g.join(', ')}</div>`).join('');
-      resultado.innerHTML = output;
+      // Display
+      resultado.innerHTML = `<p>Total participantes: <strong>${nomes.length}</strong> | Total grupos: <strong>${grupos.length}</strong></p>` +
+        grupos.map((g, idx) => {
+          const hue = Math.round((360 * idx) / grupos.length);
+          return `<div class="group-box" style="background:hsl(${hue},70%,85%)"><strong>Grupo ${String.fromCharCode(65+idx)}</strong>: ${g.join(', ')}</div>`;
+        }).join('');
+      btnCopiar.disabled = false;
+      btnExportar.disabled = false;
     });
 
-    btnCopiar.addEventListener('click', function() {
-      const text = resultado.innerText;
-      navigator.clipboard.writeText(text).then(() => alert('Grupos copiados para a área de transferência.'));
+    btnCopiar.addEventListener('click', () => {
+      navigator.clipboard.writeText(resultado.innerText).then(() => alert('Copiado!'));
     });
 
-    btnExportar.addEventListener('click', function() {
-      const text = resultado.innerText;
-      const blob = new Blob([text], { type: 'text/plain' });
+    btnExportar.addEventListener('click', () => {
+      const blob = new Blob([resultado.innerText], { type: 'text/plain' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
       link.download = 'grupos.txt';
