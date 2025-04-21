@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Artigo: Khan Academy – Educação Gratuita com vídeos e exercícios interativos adaptativos." />
+  <title>Khan Academy: Educação Gratuita | Ferramentas Educativas</title>
+  <link rel="icon" href="favicon.png" sizes="32x32" type="image/png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <style>
+    body { font-family: Arial, sans-serif; padding-top: 70px; background: #f5f5f5; }
+    .navbar { background: linear-gradient(90deg, #4e73df, #224abe); }
+    .navbar .navbar-brand, .navbar .nav-link { color: #fff !important; }
+    .navbar .nav-link:hover { color: #d1d1e0 !important; }
+    footer { background: #f8f9fa; padding: 20px 0; text-align: center; margin-top: 40px; }
+    .article-header { margin-bottom: 30px; }
+    .article-content h2 { margin-top: 30px; }
+    .references a { display: block; margin-bottom: 5px; }
+  </style>
+</head>
+<body>
+  <!-- Navegação -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Ferramentas Educativas</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Alternar navegação">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+          <li class="nav-item"><a class="nav-link" href="análises.html">Artigos</a></li>
+          <li class="nav-item"><a class="nav-link" href="sobre.html">Sobre</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Conteúdo do artigo -->
+  <main class="container article-content">
+    <header class="article-header text-center">
+      <h1>Khan Academy: Educação Gratuita</h1>
+      <p class="text-muted">Publicado em <time datetime="2025-04-21">21 de abril de 2025</time></p>
+    </header>
+
+    <section>
+      <h2>Introdução</h2>
+      <p>A Khan Academy é uma organização sem fins lucrativos que oferece vídeos educativos, exercícios práticos e painéis de acompanhamento de desempenho, totalmente gratuitos. Fundada em 2008, a plataforma democratiza o acesso ao ensino em diversas áreas do conhecimento.</p>
+    </section>
+
+    <section>
+      <h2>Principais Funcionalidades</h2>
+      <ul>
+        <li><strong>Vídeos Explicativos:</strong> Aulas curtas e objetivas em matemática, ciências, humanidades e mais.</li>
+        <li><strong>Exercícios Interativos:</strong> Prática adaptativa que ajusta a dificuldade conforme o progresso do aluno.</li>
+        <li><strong>Painel do Professor:</strong> Monitorização em tempo real do desempenho da turma e tarefas atribuídas.</li>
+        <li><strong>Khanmigo AI Tutor:</strong> Assistente virtual baseado em IA para suporte personalizado (<a href="https://khanacademy.org/khanmigo" target="_blank" rel="noopener">Khanmigo</a>).</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Benefícios Educativos</h2>
+      <ul>
+        <li>Acessibilidade global sem custos, em múltiplos idiomas.</li>
+        <li>Flexibilidade de ritmo, permitindo revisão e avanço conforme necessidade.</li>
+        <li>Dados analíticos para intervenção precoce em alunos com dificuldades.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Estudos de Caso</h2>
+      <p>No Agrupamento de Escolas de Gaia, Portugal, a Khan Academy foi integrada em turmas do 9.º ano, aumentando em 25% a taxa de conclusão de exercícios de matemática.</p>
+      <p>No Colégio Santo Agostinho, em Belo Horizonte, pelo menos 80% dos alunos utilizaram a plataforma para reforço de física, observando melhoria de 18% nas avaliações finais.</p>
+    </section>
+
+    <section>
+      <h2>Recomendações para Educadores</h2>
+      <ol>
+        <li>Identificar tópicos-chave do currículo e criar playlists personalizadas para os alunos.</li>
+        <li>Atribuir exercícios e acompanhar o painel de progresso para intervenções direcionadas.</li>
+        <li>Combinar vídeos da Khan Academy com aulas presenciais para reforço de conceitos.</li>
+      </ol>
+    </section>
+
+    <section class="references">
+      <h2>Leitura Recomendada</h2>
+      <a href="https://pt.khanacademy.org/" target="_blank" rel="noopener">Site Oficial Khan Academy (PT)</a>
+      <a href="https://edutopia.org/article/whats-khan-academy" target="_blank" rel="noopener">Edutopia: What's Khan Academy?</a>
+      <a href="https://unesdoc.unesco.org/ark:/48223/pf0000376700" target="_blank" rel="noopener">UNESCO: Tecnologias Educacionais (2021)</a>
+    </section>
+
+    <div class="text-center mt-4">
+      <a href="análises.html" class="btn btn-secondary">Voltar aos Artigos</a>
+    </div>
+  </main>
+
+  <!-- Rodapé -->
+  <footer>
+    <div class="container text-center">
+      <p>&copy; <span id="year"></span> Ferramentas Educativas. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
