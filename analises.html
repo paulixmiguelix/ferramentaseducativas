@@ -101,6 +101,36 @@
           </div>
         </div>
       </div>
+      <!-- Novo Artigo 4 -->
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Inteligência Artificial na Sala de Aula</h5>
+            <p class="card-text">Explore aplicações práticas de IA para personalizar o ensino e automatizar tarefas.</p>
+            <a href="ia-sala-de-aula.html" class="btn btn-primary">Ler Mais</a>
+          </div>
+        </div>
+      </div>
+      <!-- Novo Artigo 5 -->
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Ensino Híbrido: Desafios e Oportunidades</h5>
+            <p class="card-text">Analisamos estratégias para integrar ensino presencial e online com eficácia.</p>
+            <a href="ensino-hibrido.html" class="btn btn-primary">Ler Mais</a>
+          </div>
+        </div>
+      </div>
+      <!-- Novo Artigo 6 -->
+      <div class="col-md-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">Metodologias Ativas na Educação</h5>
+            <p class="card-text">Descubra como projetos e aprendizagem baseada em problemas engajam alunos no Brasil.</p>
+            <a href="metodologias-ativas.html" class="btn btn-primary">Ler Mais</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -135,11 +165,7 @@
       artigos.forEach(artigo => {
         const titulo = artigo.querySelector('.card-title').textContent.toLowerCase();
         const descricao = artigo.querySelector('.card-text').textContent.toLowerCase();
-        if (titulo.includes(termo) || descricao.includes(termo)) {
-          artigo.style.display = 'block';
-        } else {
-          artigo.style.display = 'none';
-        }
+        artigo.style.display = (titulo.includes(termo) || descricao.includes(termo)) ? 'block' : 'none';
       });
     });
   </script>
