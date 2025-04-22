@@ -232,6 +232,21 @@
       });
     });
   </script>
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('listaArtigos');
+    const artigos = Array.from(container.children);
+
+    // Função de embaralhamento (Fisher-Yates)
+    for (let i = artigos.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [artigos[i], artigos[j]] = [artigos[j], artigos[i]];
+    }
+
+    // Remover todos os artigos do DOM e readicioná-los na nova ordem
+    artigos.forEach(artigo => container.appendChild(artigo));
+  });
+</script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
